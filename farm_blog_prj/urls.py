@@ -21,8 +21,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('blog/',include('blog.urls')), #blog/로 접속할 때는 blog앱의 urls.py를 참고하도록 설정
     path('admin/', admin.site.urls),
     path('',include('single_pages.urls')), #도메인 뒤에 아무것도 붙어 있지 않은 경우 single_pages로 이동하도록 설정
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

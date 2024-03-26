@@ -13,6 +13,8 @@ class Post(models.Model):
     title = models.CharField(max_length=20)  # 제목: 최대 20글자
     content = models.TextField()  # 글 내용
 
+    #blank=True는 해당 옵션이 필수는 아니라는 뜻
+    head_image = models.ImageField(upload_to='blog/images/%y/%m/%d/', blank=True)
     # 포스트 작성
     created_at = models.DateTimeField(auto_now_add=True)  # 작성시간 : 현재 시간 자동 입력
     # auto_now_add=True 처음 레코드가 설정될 때 현재 시각이 자동으로 저장

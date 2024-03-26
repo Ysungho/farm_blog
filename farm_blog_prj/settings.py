@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """장고 프로젝트의 설정을 담고 있는 파일"""
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,6 +123,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/' #웹 브라우저 도메인 주소 뒤에 '/media/'가 따라오면 미디어 파일을 사용했다는 의미
+MEDIA_ROOT = os.path.join(BASE_DIR, '_media') #_media 폴더에 이미지가 저장되도록 설정
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
