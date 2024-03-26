@@ -11,6 +11,7 @@ class Post(models.Model):
     created_at 필드는 DateTimeField로 만듬
     DateTimeField는 월,일,시,분,초까지 기록할 수 있게 필드를 만듬"""
     title = models.CharField(max_length=20)  # 제목: 최대 20글자
+    hook_text = models.CharField(max_length=100, blank=True)
     content = models.TextField()  # 글 내용
 
     #blank=True는 해당 옵션이 필수는 아니라는 뜻
