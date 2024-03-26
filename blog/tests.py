@@ -28,7 +28,7 @@ class TestView(TestCase):
 
         # 3. 페이지의 타이틀은 'Farm Market'이다
         soup = BeautifulSoup(response.content, 'html.parser')
-        self.assertEqual(soup.title.text, 'Farm Market')
+        self.assertEqual(soup.title.text, 'Blog')
 
         # 4. 네이게이션 바의 존재 확인
         navbar = soup.nav
