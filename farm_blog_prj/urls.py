@@ -15,9 +15,13 @@ Including another URLconf
 """
 
 """사용자가 어떤 URL 형식으로 접근했을 때 어떻게 웹 사이트를 작동시킬지 정리해 놓은 파일"""
+"""urls.py는 장고로 개발한 웹 사이트에 방문했을 때 어떤 페이지로 들어가야 하는지 알려줌"""
+"""과정: 방문자가 서버 ip/admin/으로 접속하면 admin.site.urls에 정의된 내용을 찾아 처리함"""
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
+    path('blog',include('blog.urls')), #blog/로 접속할 때는 blog앱의 urls.py를 참고하도록 설정
     path('admin/', admin.site.urls),
 ]

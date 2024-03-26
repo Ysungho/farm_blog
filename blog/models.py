@@ -6,6 +6,10 @@ from django.db import models
 # Create your models here.
 class Post(models.Model):
 
+    """CharField는 문자(char)를 담는 필드를 만듬
+    content필드는 문자열의 길이 제한을 TextField를 사용해서 만듬
+    created_at 필드는 DateTimeField로 만듬
+    DateTimeField는 월,일,시,분,초까지 기록할 수 있게 필드를 만듬"""
     title=models.CharField(max_length=20) #제목: 최대 20글자
     content=models.TextField() #글 내용
 
