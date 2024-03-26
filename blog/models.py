@@ -28,10 +28,11 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # 작성자
-    author=models.ForeignKey(User,on_delete=models.CASCADE)
+    # on_delete=models.SET_NULL은 작성자가 데이터베이스에서 삭제되었을 때 작성자 명을 빈칸으로 만듬
+    author=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f'[{self.pk}]{self.title}'
+        return f'[{self.pk}]{self.title}::{self.author}'
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'
