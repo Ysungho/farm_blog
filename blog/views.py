@@ -1,14 +1,17 @@
 """urls.py에 들어갈 함수나 클래스 등은 views.py에서 정의함"""
 
-#from django.shortcuts import render
+# from django.shortcuts import render
 from .models import Post, Category
 from django.views.generic import ListView, DetailView
 
 """PostList를래스를 ListView클래스를 상속해서 만듬"""
+
+
 class PostList(ListView):
     model = Post
     ordering = '-pk'
-    #template_name = 'blog/index.html'
+
+    # template_name = 'blog/index.html'
     # html파일명을 _list.html로 변경하거나 template_name='blog/index.html'로 설정하면 됨
 
     def get_context_data(self, **kwargs):
@@ -21,8 +24,15 @@ class PostList(ListView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         return context
 
+
 class PostDetail(DetailView):
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data()
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        return context
 
 
 # def index(request):
