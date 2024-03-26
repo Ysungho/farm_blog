@@ -2,6 +2,7 @@
 """제목(title), 내용(content), 작성일(created_at), 작성자 정보(author)가 필요"""
 
 from django.db import models
+from django.contrib.auth.models import User
 import os
 
 # Create your models here.
@@ -26,7 +27,8 @@ class Post(models.Model):
     # 포스트 수정
     updated_at = models.DateTimeField(auto_now=True)
 
-    # 작성자는 추후 작성 예정
+    # 작성자
+    author=models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
         return f'[{self.pk}]{self.title}'
