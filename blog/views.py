@@ -1,8 +1,8 @@
 """urls.py에 들어갈 함수나 클래스 등은 views.py에서 정의함"""
 
-from django.shortcuts import render
+#from django.shortcuts import render
 from .models import Post
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 """PostList를래스를 ListView클래스를 상속해서 만듬"""
 class PostList(ListView):
@@ -10,6 +10,9 @@ class PostList(ListView):
     ordering = '-pk'
     #template_name = 'blog/index.html'
     # html파일명을 _list.html로 변경하거나 template_name='blog/index.html'로 설정하면 됨
+
+class PostDetail(DetailView):
+    model = Post
 
 
 # def index(request):
