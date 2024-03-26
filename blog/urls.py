@@ -8,4 +8,5 @@ urlpatterns=[
     # '도메인 뒤에 /blog/가 붙었을 때는 blog/urls.py에서 처리한다'->blog/urls.py로 접근
     # /blog/ 뒤에 아무것도 없다면 blog/views.py에서 정의된 index()함수에서 처리
     path('', views.index),
+    path('<int:pk>/',views.single_post_page),
 ]

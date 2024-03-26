@@ -22,6 +22,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('blog',include('blog.urls')), #blog/로 접속할 때는 blog앱의 urls.py를 참고하도록 설정
+    path('blog/',include('blog.urls')), #blog/로 접속할 때는 blog앱의 urls.py를 참고하도록 설정
     path('admin/', admin.site.urls),
 ]
