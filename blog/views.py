@@ -1,4 +1,5 @@
 """urls.py에 들어갈 함수나 클래스 등은 views.py에서 정의함"""
+from django.shortcuts import render
 
 # from django.shortcuts import render
 from .models import Post, Category
@@ -63,5 +64,26 @@ def single_post_page(request, pk):
         'blog/single_post_page.html',
         {
             'post': post,
+        }
+    )
+
+
+def category_page(request, slug):
+    # URL에서 추출하여 category_page()함수의 인자로 받은 slug와 동일한 slug를 갖는 카테고리를 불러오는 쿼리셋을 만들어 catetory 변수에 저장
+    if slug == 'no_category':  # slug인자가 no_catetory로 넘어오면 카테고리가 없는 포스트만 보여줌
+        category = '미분류'
+        post_list = Post.objects.filter(category=None)
+    else:
+        category = Category.objects.get(slug=slug)
+        post_list = Post.objects.filter(category=category)
+
+    return render(
+        request,
+        'blog/post_list.html',
+        {
+            'post_list': post_list,  # 필터링한 카테고리만 가지고 올것
+            'categories': Category.objects.all(),  # 페이지 오른쪽에 위치한 카테고리 카드를 채워줌
+            'no_category_post_count': Post.objects.filter(category=None).count(),  # 카테고리 카드 맨 아래에 미분류 포스트와 그 개수를 알려줌
+            'category': category,  # 페이지 타이틀 옆에 카테고리 이름을 알려줌
         }
     )
