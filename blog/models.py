@@ -2,7 +2,7 @@
 """제목(title), 내용(content), 작성일(created_at), 작성자 정보(author)가 필요"""
 
 from django.db import models
-
+import os
 
 # Create your models here.
 class Post(models.Model):
@@ -14,7 +14,10 @@ class Post(models.Model):
     content = models.TextField()  # 글 내용
 
     #blank=True는 해당 옵션이 필수는 아니라는 뜻
+    # blog/files/년/월/일/ 경로가 생기고, 그 아래 파일이 저장됨
     head_image = models.ImageField(upload_to='blog/images/%y/%m/%d/', blank=True)
+    file_upload = models.FileField(upload_to='blog/files/%y/%m/%d/', blank=True)
+
     # 포스트 작성
     created_at = models.DateTimeField(auto_now_add=True)  # 작성시간 : 현재 시간 자동 입력
     # auto_now_add=True 처음 레코드가 설정될 때 현재 시각이 자동으로 저장
@@ -29,3 +32,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'
+
+    def get_file_name(self):
+        return os.path.basename(self.file_upload.name)
+
+    def get_file_ext(self):
+        return self.get_file_name().split('.')[-1]
