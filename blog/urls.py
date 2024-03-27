@@ -16,5 +16,6 @@ urlpatterns=[
     # 127.0.0.1:8000/blog/category/programming/이라고 입력하면 programming/만 떼어 views.py의 category_page()로 보냄
     path('category/<str:slug>/', views.category_page),
     path('tag/<str:slug>/', views.tag_page),
+    path('create_post/', views.PostCreate.as_view()),
 
 ]

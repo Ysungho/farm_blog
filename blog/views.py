@@ -1,9 +1,10 @@
 """urls.py에 들어갈 함수나 클래스 등은 views.py에서 정의함"""
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # from django.shortcuts import render
 from .models import Post, Category, Tag
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 """PostList를래스를 ListView클래스를 상속해서 만듬"""
 
@@ -102,6 +103,23 @@ def tag_page(request, slug):
             'no_category_post_count': Post.objects.filter(category=None).count(),
         }
     )
+
+
 # URL에서 인자로 넘오온 slug와 동일안 slug를 가진 태그를 퀘리셋으로 가져와 tag에 저장
 # 태그에 연결된 포스트 전체를 post_list에 저장 후 쿼리 셋으로 가져온 인자를 render()함수 안에 딕셔너리로 담음
 # 참고로 categories, tag는 형제 함수로 내용과 만드는 과정이 비슷함
+
+class PostCreate(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']  # Post 모델에서 사용할 필드명 리스트
+
+
+    # PostCreate에서 form_valid()함수를 재정의하면 CreateView에서 기본으로 제공하는 form_valid()함수의 기능을 확장할 수 있음
+    def form_valid(self, form):
+        current_user = self.request.user  # self.request.user 는 방문자를 의미
+        # is_authenticated로 로그인 상태인지 확인
+        if current_user.is_authenticated:
+            form.instance.author = current_user
+            return super(PostCreate, self).form_valid(form) 
+        else:
+            return redirect('/blog/')
