@@ -1,9 +1,10 @@
 """urls.py에 들어갈 함수나 클래스 등은 views.py에서 정의함"""
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 
 # from django.shortcuts import render
 from .models import Post, Category, Tag
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 """PostList를래스를 ListView클래스를 상속해서 만듬"""
@@ -125,3 +126,19 @@ class PostCreate(LoginRequiredMixin,UserPassesTestMixin, CreateView):
             return super(PostCreate, self).form_valid(form)
         else:
             return redirect('/blog/')
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category', 'tags']
+
+    template_name = 'blog/post_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        # 방문자(request.user)는 로그인 한 상태여야 한다.
+        # self.get_object().author에서 self.get_object()는 UpdateView의 메서드로 Post.objects.get(pk=pk)과 동일한 역할
+        # 이렇게 가져온 Post 인스턴스의 author필드가 방문자와 동일한 경우에만 dispatch()메서드가 원래 역할을 함
+        else:
+            raise PermissionDenied
+        # 그렇지 않은 경우 raise PermissionDenied를 실행
