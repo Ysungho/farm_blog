@@ -48,12 +48,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'markdownx',
 
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-
 ]
 
 MIDDLEWARE = [
@@ -64,9 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-    # 아래 코드 없으면 middleware 오류 발생
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'farm_blog_prj.urls'
@@ -148,15 +139,20 @@ CRISPY_ALLOWED_TEMPLATE_PACK = 'bootstrap5'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+<<<<<<< HEAD
 
 AUTHENTICATION_BACKENDS=[
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    ]
+]
+
+
 
 
 SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-LOGIN_REDIRECT_URL = '/blog/'
+LOGIN_REDIRECT_URL='/blog/'
+=======
+>>>>>>> parent of 31316a5 (구글 로그인 기능 추가)

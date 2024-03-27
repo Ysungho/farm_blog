@@ -7,6 +7,7 @@ from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
 import os
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
@@ -66,8 +67,6 @@ class Post(models.Model):
 
     tags = models.ManyToManyField(Tag, blank=True)
 
-
-
     def __str__(self):
         return f'[{self.pk}]{self.title}::{self.author}'
 
@@ -82,3 +81,23 @@ class Post(models.Model):
 
     def get_content_markdown(self):
         return markdown(self.content)
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    # content 필드는 TestField로 구성하고 줄바꿈 만 구현
+    # created_at 필드와 modified_at 필드는 DateTimeField로 만듬
+    # created_at 필드에는 처음 생성될 때 시간을 저장하도록 auto_now=True로 설정
+    # modified_at 필드는 저장될 때 시간을 저장하도록 auto_now=True로 설정
+
+    # 작성자 명 출력
+    def __str__(self):
+        return f'{self.author}::{self.content}'
+
+    def get_absolute_url(self):
+        return f'{self.post.get_absolute_url()}#comment-{self.pk}'
