@@ -148,6 +148,10 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+""" test 실행 시 필요, 하지만 runserver 시 불필요(주석 처리해야함)
+    그렇지 않으면 오류 발생
+    또한 github에 push 할때 보안 때문에 오류 발생.
+    그래서 매번 id, secert key 입력 필요함"""
 # SOCIALACCOUNT_PROVIDERS = {
 #     "google": {
 #         "APP": {
