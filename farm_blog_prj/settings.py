@@ -46,6 +46,12 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'markdownx',
 
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
 ]
 
 MIDDLEWARE = [
@@ -56,6 +62,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # 아래 코드 없으면 middleware 오류 발생
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'farm_blog_prj.urls'
@@ -134,16 +143,12 @@ CRISPY_ALLOWED_TEMPLATE_PACK = 'bootstrap5'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-"""없으면 test 불가, 있으면 runserver 에러 발생
-    따라서 필요에 따라 잘 사용할 것 """
 SOCIALACCOUNT_PROVIDERS = {
-
     "google": {
         "APP": {
             "client_id": os.getenv("GOOGLE_CLIENT_ID"),
