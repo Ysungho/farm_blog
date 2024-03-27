@@ -15,5 +15,6 @@ urlpatterns=[
     # catetory/뒤에 문자열이 붙는 URL을 입력하면 그 문자열을 views.py에 정의할 category_page()함수의 매개변수인 slug의 인자로 념겨줌
     # 127.0.0.1:8000/blog/category/programming/이라고 입력하면 programming/만 떼어 views.py의 category_page()로 보냄
     path('category/<str:slug>/', views.category_page),
+    path('tag/<str:slug>/', views.tag_page),
 
 ]

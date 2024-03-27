@@ -2,7 +2,7 @@
 from django.shortcuts import render
 
 # from django.shortcuts import render
-from .models import Post, Category
+from .models import Post, Category, Tag
 from django.views.generic import ListView, DetailView
 
 """PostList를래스를 ListView클래스를 상속해서 만듬"""
@@ -87,3 +87,21 @@ def category_page(request, slug):
             'category': category,  # 페이지 타이틀 옆에 카테고리 이름을 알려줌
         }
     )
+
+
+def tag_page(request, slug):
+    tag = Tag.objects.get(slug=slug)
+    post_list = tag.post_set.all()
+    return render(
+        request,
+        'blog/post_list.html',
+        {
+            'post_list': post_list,
+            'tag': tag,
+            'categories': Category.objects.all(),
+            'no_category_post_count': Post.objects.filter(category=None).count(),
+        }
+    )
+# URL에서 인자로 넘오온 slug와 동일안 slug를 가진 태그를 퀘리셋으로 가져와 tag에 저장
+# 태그에 연결된 포스트 전체를 post_list에 저장 후 쿼리 셋으로 가져온 인자를 render()함수 안에 딕셔너리로 담음
+# 참고로 categories, tag는 형제 함수로 내용과 만드는 과정이 비슷함
