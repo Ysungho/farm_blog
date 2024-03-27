@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'blog',
     'single_pages',
 
+    'crispy_forms',
+    'crispy_bootstrap5',
+
 ]
 
 MIDDLEWARE = [
@@ -128,6 +131,8 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/' #웹 브라우저 도메인 주소 뒤에 '/media/'가 따라오면 미디어 파일을 사용했다는 의미
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media') #_media 폴더에 이미지가 저장되도록 설정
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACK = 'bootstrap5'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
