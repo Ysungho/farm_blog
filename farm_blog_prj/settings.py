@@ -17,7 +17,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = 'django-insecure-zu@&sr%yc(ms)z!@^3f*$8%e-qcmhiyxyx0_^#7-6gaw6)tl&1
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -80,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'farm_blog_prj.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -90,7 +87,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -110,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -124,14 +119,13 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/' #웹 브라우저 도메인 주소 뒤에 '/media/'가 따라오면 미디어 파일을 사용했다는 의미
-MEDIA_ROOT = os.path.join(BASE_DIR, '_media') #_media 폴더에 이미지가 저장되도록 설정
+MEDIA_URL = '/media/'  # 웹 브라우저 도메인 주소 뒤에 '/media/'가 따라오면 미디어 파일을 사용했다는 의미
+MEDIA_ROOT = os.path.join(BASE_DIR, '_media')  # _media 폴더에 이미지가 저장되도록 설정
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 CRISPY_ALLOWED_TEMPLATE_PACK = 'bootstrap5'
 
@@ -139,20 +133,37 @@ CRISPY_ALLOWED_TEMPLATE_PACK = 'bootstrap5'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-<<<<<<< HEAD
 
-AUTHENTICATION_BACKENDS=[
+
+AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+"""없으면 test 불가, 있으면 runserver 에러 발생
+    따라서 필요에 따라 잘 사용할 것 """
+SOCIALACCOUNT_PROVIDERS = {
 
-
+    "google": {
+        "APP": {
+            "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+            "secret": os.getenv("GOOGLE_SECRET_KEY"),
+            "key": ""
+        },
+        # These are provider-specific settings that can only be
+        # listed here:
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        }
+    }
+}
 
 SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-LOGIN_REDIRECT_URL='/blog/'
-=======
->>>>>>> parent of 31316a5 (구글 로그인 기능 추가)
+LOGIN_REDIRECT_URL = '/blog/'
