@@ -16,6 +16,7 @@ from .forms import CommentForm
 class PostList(ListView):
     model = Post
     ordering = '-pk'
+    paginate_by = 7
 
     # template_name = 'blog/index.html'
     # html파일명을 _list.html로 변경하거나 template_name='blog/index.html'로 설정하면 됨
