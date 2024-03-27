@@ -3,6 +3,8 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from markdownx.models import MarkdownxField
+from markdownx.utils import markdown
 import os
 
 class Tag(models.Model):
@@ -41,7 +43,7 @@ class Post(models.Model):
     DateTimeField는 월,일,시,분,초까지 기록할 수 있게 필드를 만듬"""
     title = models.CharField(max_length=20)  # 제목: 최대 20글자
     hook_text = models.CharField(max_length=100, blank=True)
-    content = models.TextField()  # 글 내용
+    content = MarkdownxField()  # 글 내용
 
     # blank=True는 해당 옵션이 필수는 아니라는 뜻
     # blog/files/년/월/일/ 경로가 생기고, 그 아래 파일이 저장됨
@@ -77,3 +79,6 @@ class Post(models.Model):
 
     def get_file_ext(self):
         return self.get_file_name().split('.')[-1]
+
+    def get_content_markdown(self):
+        return markdown(self.content)
