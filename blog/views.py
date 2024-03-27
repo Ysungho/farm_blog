@@ -1,5 +1,6 @@
 """urls.py에 들어갈 함수나 클래스 등은 views.py에서 정의함"""
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.shortcuts import render, redirect
 
 # from django.shortcuts import render
@@ -240,3 +241,21 @@ def delete_comment(request, pk):
         return redirect(post.get_absolute_url())
     else:
         raise PermissionDenied
+
+
+class PostSearch(PostList):
+    paginate_by = None # 검색된 결과를 한 페이지에 다 보여줌
+
+    def get_queryset(self):
+        q = self.kwargs['q'] # self.kwargs['q']로 URL을 통해 넘어온 검색어를 받아 q라는 변수에 저장
+        post_list = Post.objects.filter(
+            Q(title__contains=q) | Q(tags__name__contains=q)
+        ).distinct() # distinct()는 중복으로 가져온 요소가 있으면 한 번만 나타나게 하기 위한 설정
+        return post_list
+
+    def get_context_data(self, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
+
+        return context
