@@ -1,15 +1,27 @@
 version: '3'
 
 services:
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/usr/src/app/_static
+      - media_volume:/usr/src/app/_media
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
   web:
     build: .
     command: gunicorn farm_blog_prj.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./:/usr/src/app/
-    ports:
-      - 8000:8000
+      - static_volume:/usr/src/app/_static
+      - media_volume:/usr/src/app/_media
+    expose:
+      - 8000
     env_file:
-      - ./.env.dev
+      - ./.env.prod
     depends_on:
       - db
 
@@ -17,9 +29,9 @@ services:
     image: postgres:12.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=farm_story_db_user
-      - POSTGRES_PASSWORD=farm_story_db_password
-      - POSTGRES_DB=farm_story_dev
+    env_file:
+      - ./.env.prod.db
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:

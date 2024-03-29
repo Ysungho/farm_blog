@@ -163,23 +163,23 @@ AUTHENTICATION_BACKENDS = [
     그래서 매번 id, secert key 입력 필요함"""
 """ dokcer로 파일 실행 시 아래의 코드 활성화 필요
     하지만 보안상의 이슈로 github push 할때는 보안 활성화 할것"""
-# SOCIALACCOUNT_PROVIDERS = {
+#SOCIALACCOUNT_PROVIDERS = {
 #     "google": {
 #         "APP": {
-#             "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-#             "secret": os.getenv("GOOGLE_SECRET_KEY"),
+#             "client_id": os.getenv(""),
+#             "secret": os.getenv(""),
 #             "key": ""
 #         },
 #         # These are provider-specific settings that can only be
 #         # listed here:
-#         "SCOPE": [
-#             "profile",
+#        "SCOPE": [
+#            "profile",
 #             "email",
 #         ],
 #         "AUTH_PARAMS": {
-#             "access_type": "online",
+#            "access_type": "online",
 #         }
-#     }
+#    }
 # }
 
 SITE_ID = 1
