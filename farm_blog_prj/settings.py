@@ -96,8 +96,12 @@ WSGI_APPLICATION = 'farm_blog_prj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get('SQL_USER', 'user'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
+        'HOST': os.environ.get('SQL_HOST', 'localhost'),
+        'PORT': os.environ.get("SQL_PORT", '5432'),
     }
 }
 
@@ -156,6 +160,8 @@ AUTHENTICATION_BACKENDS = [
     그렇지 않으면 오류 발생
     또한 github에 push 할때 보안 때문에 오류 발생.
     그래서 매번 id, secert key 입력 필요함"""
+""" dokcer로 파일 실행 시 아래의 코드 활성화 필요
+    하지만 보안상의 이슈로 github push 할때는 보안 활성화 할것"""
 # SOCIALACCOUNT_PROVIDERS = {
 #     "google": {
 #         "APP": {
