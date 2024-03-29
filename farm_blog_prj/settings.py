@@ -21,12 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zu@&sr%yc(ms)z!@^3f*$8%e-qcmhiyxyx0_^#7-6gaw6)tl&1'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-zu@&sr%yc(ms)z!@^3f*$8%e-qcmhiyxyx0_^#7-6gaw6)tl&1')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# debug , 0이 원래 값인데 디버그 안돼서 1로 바꿈, 추후에 docker 에 올릴 땐 0으로 바꿀것
+DEBUG = int(os.environ.get('DEBUG', 1))
 
-ALLOWED_HOSTS = []
+if os.environ.get('DJANGO_ALLOWED_HOSTS'):
+    ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
+else:
+    ALLOWED_HOSTS = []
 
 # Application definition
 
